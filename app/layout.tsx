@@ -14,8 +14,8 @@ const fontSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Salexa",
-  description: "Moderna aplikacija za upravljanje silosom",
+  title: "Carepulse",
+  description: "Get started with appointments",
 };
 
 export default function RootLayout({

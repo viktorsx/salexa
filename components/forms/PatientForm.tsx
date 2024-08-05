@@ -3,10 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import CustomFormField from "../ui/CustomFormField"
-import SubmitButton from "../ui/SubmitButton"
+import CustomFormField from "../CustomFormField"
+import SubmitButton from "@/components/SubmitButton"
 import { useState } from "react"
 import { UserFormValidation } from "@/lib/validation"
 import { useRouter } from "next/navigation"
@@ -57,16 +56,16 @@ const PatientForm = () => {
         <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
-            <h1 className="header">Dobro došli na Salexa panel!</h1>
-            <p className="text-dark-700">Salexa je moderna aplikacija za upravljanje silosom.</p>
+            <h1 className="header">Hi there 👋</h1>
+            <p className="text-dark-700">Get started with appointments.</p>
         </section>
 
         <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="name"
-            label="Ime i prezime:"
-            placeholder="Petar Petrovic"
+            label="Full name"
+            placeholder="John Doe"
             iconSrc="/assets/icons/user.svg"
             iconAlt="user"
         />
@@ -75,7 +74,7 @@ const PatientForm = () => {
             control={form.control}
             name="email"
             label="Email:"
-            placeholder="petar.petrovic@salcorp.rs"
+            placeholder="johndoe@gmail.com"
             iconSrc="/assets/icons/email.svg"
             iconAlt="email"
         />
@@ -83,10 +82,10 @@ const PatientForm = () => {
             fieldType={FormFieldType.PHONE_INPUT}
             control={form.control}
             name="phone"
-            label="Broj telefona:"
+            label="Phone number:"
             placeholder="+381 64 555 55 55"
         />
-        <SubmitButton isLoading={isLoading}>Registruj se</SubmitButton>
+        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>
     )
