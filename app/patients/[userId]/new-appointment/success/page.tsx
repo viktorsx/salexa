@@ -32,6 +32,7 @@ const Success = async ({ params: {userId}, searchParams}: SearchParamProps) => {
                 height={300}
                 width={280}
                 alt='success'
+                unoptimized
                 />
             <h2 className='header mb-6 max-w-[600px] text-center'>
                 Your <span className='text-green-500'>appointment request</span> has been successfully submitted!
