@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.disabled-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ========================================== TAILWIND STYLES */
 @layer base {
   /* Remove scrollbar */
