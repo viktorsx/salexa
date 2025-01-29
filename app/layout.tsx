@@ -14,7 +14,7 @@ const fontSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Carepulse",
+  title: "Salcorp Panel",
   description: "Get started with appointments",
 };
 

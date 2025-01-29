@@ -1,4 +1,4 @@
-"use client"
+import { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,105 +8,73 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
-import { useEffect, useState } from "react";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; // Importujte useRouter
 import { decryptKey, encryptKey } from "@/lib/utils";
 
-const PasskeyModal = () => {
-  const router = useRouter();
-  const path = usePathname();
+const PasskeyModal = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
+  const router = useRouter(); // Inicijalizujte useRouter
   const [open, setOpen] = useState(true);
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
 
-  const encryptedKey = typeof window !== 'undefined' ? window.localStorage.getItem('accessKey') : null;
-
   useEffect(() => {
-
+    const encryptedKey = typeof window !== "undefined" ? window.localStorage.getItem("accessKey") : null;
     const accessKey = encryptedKey && decryptKey(encryptedKey);
 
-    if(path) {
-        if(accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY!.toString()) {
-            setOpen(false);
-            router.push('/admin')
-        } else {
-            setOpen(true);
-        }
+    if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
+      setOpen(false);
+      onAuthSuccess(); // Poziva funkciju kada je korisnik već autentifikovan
     }
-  }, [encryptedKey])
-
+  }, []);
 
   const validatePasskey = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    if(passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
-        const encryptedKey = encryptKey(passkey);
-
-        localStorage.setItem('accessKey', encryptedKey);
-        setOpen(false);
+    if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
+      const encryptedKey = encryptKey(passkey);
+      localStorage.setItem("accessKey", encryptedKey);
+      setOpen(false);
+      onAuthSuccess(); // Poziva funkciju nakon uspešne autentifikacije
+      router.refresh(); // Osvježava stranicu odmah nakon autentifikacije
     } else {
-        setError('Invalid passkey. Please try again.')
+      setError("Netačan PIN kod. Pokušajte ponovo.");
     }
-
-  }
-
-  const closeModal = () => {
-    setOpen(false);
-    router.push("/");
   };
+
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={open}>
       <AlertDialogContent className="shad-alert-dialog">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-start justify-between">
-            Admin Access Verification
+            Pristup admin panelu
             <Image
               src="/assets/icons/close.svg"
               alt="close"
               width={20}
               height={20}
-              onClick={() => closeModal()}
+              onClick={() => setOpen(false)}
               className="cursor-pointer"
             />
           </AlertDialogTitle>
           <AlertDialogDescription>
-            To access the admin page, please enter the passkey.
+            Da bi pristupili admin stranici, molimo vas unesite vaš PIN kod.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div>
-          <InputOTP
-            maxLength={6}
-            value={passkey}
-            onChange={(value) => setPasskey(value)}
-          >
+          <InputOTP maxLength={6} value={passkey} onChange={(value) => setPasskey(value)}>
             <InputOTPGroup className="shad-otp">
-              <InputOTPSlot className="shad-otp-slot" index={0} />
-              <InputOTPSlot className="shad-otp-slot" index={1} />
-              <InputOTPSlot className="shad-otp-slot" index={2} />
-              <InputOTPSlot className="shad-otp-slot" index={3} />
-              <InputOTPSlot className="shad-otp-slot" index={4} />
-              <InputOTPSlot className="shad-otp-slot" index={5} />
+              {[...Array(6)].map((_, index) => (
+                <InputOTPSlot key={index} className="shad-otp-slot" index={index} />
+              ))}
             </InputOTPGroup>
           </InputOTP>
-          {error && (
-            <p className="shad-error text-14-regular mt-4 flex justify-center">
-              {error}
-            </p>
-          )}
+          {error && <p className="shad-error text-14-regular mt-4 flex justify-center">{error}</p>}
         </div>
         <AlertDialogFooter>
-          <AlertDialogAction
-            onClick={(e) => validatePasskey(e)}
-            className="shad-primary-btn w-full"
-          >
-            Enter Admin Passkey
+          <AlertDialogAction onClick={validatePasskey} className="shad-primary-btn w-full">
+            Unesite PIN kod
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -80,7 +80,7 @@ const RegisterForm = ({ user }: { user: User }) => {
 
         <section className="space-y-6">
           <div className="mb-9 space-y-1">
-            <h2 className="sub-header">Personal Information</h2>
+            <h2 className="sub-header">Lične informacije</h2>
           </div>
         </section>
 
@@ -88,7 +88,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           fieldType={FormFieldType.INPUT}
           control={form.control}
           name="name"
-          label="Full name:"
+          label="Ime i prezime:"
           placeholder="John Doe"
           iconSrc="/assets/icons/user.svg"
           iconAlt="user"
@@ -107,7 +107,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.PHONE_INPUT}
             control={form.control}
             name="phone"
-            label="Phone number:"
+            label="Telefon:"
             placeholder="+381 64 555 55 55"
           />
         </div>
@@ -116,13 +116,13 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.DATE_PICKER}
             control={form.control}
             name="birthDate"
-            label="Date of birth:"
+            label="Datum rođenja:"
           />
           <CustomFormField
             fieldType={FormFieldType.SKELETON}
             control={form.control}
             name="gender"
-            label="Gender:"
+            label="Pol:"
             renderSkeleton={(field) => (
               <FormControl>
                 <RadioGroup
@@ -148,14 +148,14 @@ const RegisterForm = ({ user }: { user: User }) => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="address"
-            label="Address:"
+            label="Adresa:"
             placeholder="Bulevar Oslobođenja 19"
           />
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="occupation"
-            label="Occupation:"
+            label="Zanimanje:"
             placeholder="Soft Eng"
           />
         </div>
