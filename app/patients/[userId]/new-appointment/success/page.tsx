@@ -35,9 +35,9 @@ const Success = async ({ params: {userId}, searchParams}: SearchParamProps) => {
                 unoptimized
                 />
             <h2 className='header mb-6 max-w-[600px] text-center'>
-                Your <span className='text-green-500'>appointment request</span> has been successfully submitted!
+                Vaš <span className='text-green-500'>zahtev je uspešno</span> sačuvan!
             </h2>
-            <p> We'll be in touch shortly to confirm.</p>
+            <p> Uskoro ćemo vam se javiti sa više informacija.</p>
             </section>
             <section className='request-details'>
             <p>Requested appointment details:</p>
@@ -61,11 +61,15 @@ const Success = async ({ params: {userId}, searchParams}: SearchParamProps) => {
                 <p>{formatDateTime(appointment.schedule).dateTime}</p>
                 </div>
             </section>
+            <div className="flex space-x-4">
             <Button variant='outline' className='shad-primary-btn' asChild>
-                <Link href={`/patients/${userId}/new-appointment`}>New Appointment</Link>
-
+                <Link href={`/patients/${userId}/new-appointment`}>Novo zakazivanje</Link>
             </Button>
-            <p className="copyright mt-10 py-10">© 2024 Carepulse</p>
+            <Button variant='outline' className='shad-secondary-btn' asChild>
+                <Link href={`/`}>Nova registracija</Link>
+            </Button>
+            </div>
+            <p className="copyright mt-10 py-10">© 2025 Salcorp</p>
         </div>
     </div>
   )
